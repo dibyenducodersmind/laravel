@@ -11,4 +11,12 @@ class AdminController extends Controller
     {
         return view('dashboard');
     }
+
+    #Astrologer List
+    public function astrologerListPage()
+    {
+        return view('Astrologer.astrologerList');
+    }
+
+
 }
