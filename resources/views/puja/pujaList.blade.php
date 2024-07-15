@@ -92,9 +92,7 @@ use App\Models\WEB\PujaBenefits;
                                             <?php 
                                              $count = PujaBenefits::where('puja_id',$puja->id)->count();
                                             if($count > 0){  ?>
-                                                <a href="{{url('add-puja-benefits',$puja->id)}}"  class="badge badge-complete" style="background: #14770c;">Add Benefits +</a>&nbsp; &nbsp;&nbsp;
                                                 <a href="{{url('edit-benefits',$puja->id)}}"  class="badge badge-complete" style="background: #14770c;">Update Benefits +</a>&nbsp; &nbsp;&nbsp;
-
                                             <?php }else if($count == 0){ ?>
                                                 <a href="{{url('add-puja-benefits',$puja->id)}}"  class="badge badge-complete" style="background: #14770c;">Add Benefits +</a>&nbsp; &nbsp;&nbsp;
                                             <?php } ?>

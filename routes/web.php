@@ -23,4 +23,9 @@ Route::middleware([admin::class])->group(function () {
     Route::get('/puja-edit/{puja_id}'     , [PujaController::class, 'pujaEdit']);
     Route::post('/puja-update/{puja_id}'  , [PujaController::class, 'pujaUpdate']);
     Route::get('/puja-delete/{puja_id}'   , [PujaController::class, 'pujaDelete']);
+
+    Route::get('/add-puja-benefits/{puja_id}'   , [PujaController::class, 'addPujaBenefitPage']);
+    Route::post('/add-benefits/{puja_id}'       , [PujaController::class, 'addPujaBenefits']);
+    Route::get('/edit-benefits/{puja_id}'       , [PujaController::class, 'editPujaBenefits']);
+    Route::post('/update-benefits/{benefit_id}'  , [PujaController::class, 'updatePujaBenefits']);
 });

@@ -154,6 +154,73 @@ class PujaController extends Controller
         }
     }
 
+    #Puja Add Benefit Page
+    public function addPujaBenefitPage($puja_id)
+    {
+        $pujaDetails = Puja::where('id', $puja_id)->first();
+        return view('puja.addBenefits', compact('pujaDetails'));
+    }
+
+    # Puja Add Benefits
+    public function addPujaBenefits(Request $request, $puja_id)
+    {
+        try {
+            $request->validate([
+                'header' => 'required|array',
+                'header.*' => 'string|max:255',
+                'title' => 'required|array',
+                'title.*' => 'string|max:255',
+            ]);
+
+            $benefits_header = json_encode($request->header);
+            $benefits_description = json_encode($request->title);
+
+            $addBenefits = new PujaBenefits;
+            $addBenefits->puja_id              = $puja_id;
+            $addBenefits->benefits_header      = $benefits_header;
+            $addBenefits->benefits_description = $benefits_description;
+            $addBenefits->save();
+
+            return redirect()->route('puja.list')->with('success', 'Benefit added successfully!');
+
+        } catch (\Exception $e) {
+            return response()->json(['response' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    # Edit Puja Benefits
+    public function editPujaBenefits($puja_id){
+        $benefitDetails = PujaBenefits::with('puja_benefit')->where('puja_id',$puja_id)->first();
+        return view('puja.editBenefits',compact('benefitDetails'));
+
+    }
+
+    # Update Puja Benefits
+    public function updatePujaBenefits(Request $request, $benefit_id){
+        //dd($request->all());
+        try {
+            $request->validate([
+                'header' => 'required|array',
+                'header.*' => 'string|max:255',
+                'title' => 'required|array',
+                'title.*' => 'string|max:255',
+            ]);
+
+            $updateBenefits = PujaBenefits::where('id', $benefit_id)->first();
+            $header = json_encode($request->header);
+            $title = json_encode($request->title);
+
+            $updateBenefits->benefits_header      = $header;
+            $updateBenefits->benefits_description = $title;
+            $updateBenefits->update();
+            return redirect()->route('puja.list')->with('success', 'Benefit updated successfully!');
+        } catch (\Exception $e) {
+            return response()->json(['response' => false, 'message' => $e->getMessage()], 500);
+        }
+    }
+
+    
+
 
     
 }
